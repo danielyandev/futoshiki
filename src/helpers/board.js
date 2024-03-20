@@ -47,3 +47,56 @@ export function selectRandomCells(board, qty) {
 export function cellIndexToSting(row, col) {
   return `${row},${col}`
 }
+
+export function addConstraintsBasedOnSolvedBoard(board, numConstraints) {
+  const size = board.length
+  const constraints = []
+
+  // Function to check if a constraint already exists for a cell
+  function constraintExists(row, col, isVertical) {
+    return constraints.some(
+      constraint =>
+        constraint.row === row &&
+        constraint.col === col &&
+        constraint.isVertical === isVertical
+    )
+  }
+
+  while (constraints.length < numConstraints) {
+    // Randomly choose adjacent cells
+    const row = Math.floor(Math.random() * size)
+    const col = Math.floor(Math.random() * size)
+    const isVertical = Math.random() < 0.5 // Randomly decide between vertical and horizontal adjacency
+    let adjRow = isVertical ? row + 1 : row
+    let adjCol = isVertical ? col : col + 1
+
+    // Ensure the adjacent cell is within bounds
+    if (adjRow >= size || adjCol >= size) continue
+
+    // Ensure no existing constraint for these cells in this direction
+    if (constraintExists(row, col, isVertical)) continue
+
+    // Determine the direction of the constraint
+    const value = board[row][col]
+    const adjacentValue = board[adjRow][adjCol]
+    let constraint
+    if (value > adjacentValue) {
+      constraint = '>'
+    } else if (value < adjacentValue) {
+      constraint = '<'
+    } else {
+      // This case should not happen in a properly solved Futoshiki board
+      continue
+    }
+
+    // Add the constraint
+    constraints.push({
+      row,
+      col,
+      constraint,
+      isVertical
+    })
+  }
+
+  return constraints
+}
