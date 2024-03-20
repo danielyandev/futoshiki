@@ -1,32 +1,32 @@
 import { useEffect, useState } from 'react'
 import Cell from './Cell.jsx'
 import PropTypes from 'prop-types'
+import { generateSolvedBoard } from '../helpers/generator.js'
+import { cellIndexToSting, selectRandomCells } from '../helpers/board.js'
 
 export default function GameBoard({ settings }) {
   const [board, setBoard] = useState([])
 
-  const initializeBoard = size => {
-    return Array(size)
-      .fill(null)
-      .map(() =>
-        Array(size).fill({
-          value: '',
-          constraints: { right: '', bottom: '' }
-        })
-      )
-  }
-
-  const generateBoard = settings => {
-    const size = parseInt(settings.size)
-    if (!size) return []
-
-    const newBoard = initializeBoard(size)
-    setBoard(newBoard)
-  }
-
   useEffect(() => {
-    generateBoard(settings)
+    prepareBoard()
   }, [settings])
+
+  const prepareBoard = () => {
+    const solvedBoard = generateSolvedBoard(settings)
+
+    const visibleCellsCount = 2
+    const visibleCells = selectRandomCells(solvedBoard, visibleCellsCount)
+    const prepared = solvedBoard.map((row, rowIndex) =>
+      row.map((column, columnIndex) => ({
+        value: visibleCells.includes(cellIndexToSting(rowIndex, columnIndex))
+          ? column
+          : '',
+        constraints: { right: '', bottom: '' }
+      }))
+    )
+
+    setBoard(prepared)
+  }
 
   return (
     <div className="d-flex justify-content-center align-items-start">
