@@ -39,5 +39,5 @@ Cell.propTypes = {
       right: PropTypes.string,
       bottom: PropTypes.string
     })
-  })
+  }).isRequired
 }

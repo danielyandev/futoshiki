@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import Cell from './Cell.jsx'
+import PropTypes from 'prop-types'
 
-export default function GameBoard() {
-  const generateInitialBoard = () => {
-    const size = 4 // For a 4x4 board
+export default function GameBoard({ settings }) {
+  const generateInitialBoard = ({ size }) => {
+    if (!size) return []
+
+    size = parseInt(size)
     const board = Array(size)
       .fill(null)
       .map(() =>
@@ -34,8 +37,8 @@ export default function GameBoard() {
   const [board, setBoard] = useState([])
 
   useEffect(() => {
-    setBoard(generateInitialBoard())
-  }, [])
+    setBoard(generateInitialBoard(settings))
+  }, [settings])
 
   return (
     <div className="d-flex justify-content-center align-items-start">
@@ -50,4 +53,11 @@ export default function GameBoard() {
       </div>
     </div>
   )
+}
+
+GameBoard.propTypes = {
+  settings: PropTypes.exact({
+    size: PropTypes.string,
+    level: PropTypes.string
+  }).isRequired
 }
