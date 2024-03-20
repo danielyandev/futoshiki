@@ -3,41 +3,29 @@ import Cell from './Cell.jsx'
 import PropTypes from 'prop-types'
 
 export default function GameBoard({ settings }) {
-  const generateInitialBoard = ({ size }) => {
-    if (!size) return []
+  const [board, setBoard] = useState([])
 
-    size = parseInt(size)
-    const board = Array(size)
+  const initializeBoard = size => {
+    return Array(size)
       .fill(null)
       .map(() =>
         Array(size).fill({
           value: '',
-          constraints: { right: null, bottom: null }
+          constraints: { right: '', bottom: '' }
         })
       )
-
-    // Example strategy for adding constraints randomly
-    for (let row = 0; row < size; row++) {
-      for (let col = 0; col < size; col++) {
-        // Randomly decide whether to place a constraint to the right and bottom
-        // Skipping the last row and column for respective directions to avoid out-of-bounds
-        if (col < size - 1 && Math.random() > 0.5) {
-          // 50% chance of right constraint
-          board[row][col].constraints.right = Math.random() > 0.5 ? '>' : '<'
-        }
-        if (row < size - 1 && Math.random() > 0.5) {
-          // 50% chance of bottom constraint
-          board[row][col].constraints.bottom = Math.random() > 0.5 ? '>' : '<'
-        }
-      }
-    }
-    return board
   }
 
-  const [board, setBoard] = useState([])
+  const generateBoard = settings => {
+    const size = parseInt(settings.size)
+    if (!size) return []
+
+    const newBoard = initializeBoard(size)
+    setBoard(newBoard)
+  }
 
   useEffect(() => {
-    setBoard(generateInitialBoard(settings))
+    generateBoard(settings)
   }, [settings])
 
   return (

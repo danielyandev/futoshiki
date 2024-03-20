@@ -11,7 +11,7 @@ export default function Cell({ cell }) {
   const renderBottomConstraint = () => {
     if (!cell.constraints.bottom) return null
 
-    const side = cell.constraints.bottom === '>' ? 'bottom' : 'up'
+    const side = cell.constraints.bottom === '>' ? 'down' : 'up'
     return <i className={`fa fa-chevron-${side}`} />
   }
 
@@ -32,12 +32,14 @@ export default function Cell({ cell }) {
   )
 }
 
+const constraints = ['>', '<', '']
+
 Cell.propTypes = {
   cell: PropTypes.exact({
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     constraints: PropTypes.exact({
-      right: PropTypes.string,
-      bottom: PropTypes.string
+      right: PropTypes.oneOf(constraints),
+      bottom: PropTypes.oneOf(constraints)
     })
   }).isRequired
 }
