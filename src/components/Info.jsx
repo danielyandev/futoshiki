@@ -22,9 +22,7 @@ export default function Info() {
       </p>
       <p>
         Each puzzle is guaranteed to have a solution and only one. In order to
-        indicate a move, click the desired square and select a digit or the
-        delete sign (X); you can also use the digits on your keyboard (in this
-        case, the digit 0 is equivalent to the delete sign).
+        indicate a move, click the desired square and use the digits on your keyboard.
       </p>
       <p>
         For tips and tricks, you can check out a tutorial:
