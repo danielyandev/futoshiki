@@ -61,7 +61,7 @@ export default function GameBoard({ settings }) {
         {board.map((row, rowIndex) => (
           <div key={rowIndex} className="d-flex">
             {row.map((cell, colIndex) => (
-              <Cell key={colIndex} cell={cell} />
+              <Cell key={colIndex} cell={cell} maxValue={settings.size} />
             ))}
           </div>
         ))}

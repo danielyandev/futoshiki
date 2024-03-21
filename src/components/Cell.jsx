@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types'
+import { useState } from 'react'
 
-export default function Cell({ cell }) {
+export default function Cell({ cell, maxValue }) {
+  const [value, setValue] = useState(cell.value)
+
   const renderRightConstraint = () => {
     if (!cell.constraints.right) return null
 
@@ -15,11 +18,30 @@ export default function Cell({ cell }) {
     return <i className={`fa fa-chevron-${side}`} />
   }
 
+  const handleValueChange = e => {
+    let val = e.target.value
+    const notAllowedSigns = [' ', '0']
+    if (
+      notAllowedSigns.includes(val) ||
+      isNaN(val) ||
+      parseInt(val) > parseInt(maxValue)
+    ) {
+      val = ''
+    }
+
+    setValue(val)
+  }
+
   return (
     <div>
       <div className="d-flex">
         <div className="border fs-4 border-secondary fw-semibold rounded cell-box d-flex justify-content-center align-items-center">
-          {cell.value}
+          <input
+            type="text"
+            className="w-100 text-center border-0"
+            value={value}
+            onChange={handleValueChange}
+          />
         </div>
         <div className="cell-constraint-right d-flex justify-content-center align-items-center">
           {renderRightConstraint()}
@@ -41,5 +63,6 @@ Cell.propTypes = {
       right: PropTypes.oneOf(constraints),
       bottom: PropTypes.oneOf(constraints)
     })
-  }).isRequired
+  }).isRequired,
+  maxValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 }

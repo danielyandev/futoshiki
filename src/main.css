@@ -3,6 +3,10 @@
     height: 50px;
 }
 
+.cell-box input:focus-visible {
+    outline: none;
+}
+
 .cell-constraint-right {
     height: 50px;
     width: 25px;
