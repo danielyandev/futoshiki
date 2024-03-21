@@ -2,12 +2,7 @@ import { useEffect, useState } from 'react'
 import Cell from './Cell.jsx'
 import PropTypes from 'prop-types'
 import { generateSolvedBoard } from '../helpers/generator.js'
-import {
-  addConstraintsBasedOnSolvedBoard,
-  calculatePuzzleParameters,
-  cellIndexToSting,
-  selectRandomCells
-} from '../helpers/board.js'
+import { getPreparedBoard } from '../helpers/board.js'
 
 export default function GameBoard({ settings }) {
   const [board, setBoard] = useState([])
@@ -17,40 +12,9 @@ export default function GameBoard({ settings }) {
   }, [settings])
 
   const prepareBoard = () => {
-    const { visibleCellsCount, constraintsCount } =
-      calculatePuzzleParameters(settings)
-
     const solvedBoard = generateSolvedBoard(settings)
 
-    const visibleCells = selectRandomCells(solvedBoard, visibleCellsCount)
-    const constraints = addConstraintsBasedOnSolvedBoard(
-      solvedBoard,
-      constraintsCount
-    )
-
-    const prepared = solvedBoard.map((row, rowIndex) =>
-      row.map((column, columnIndex) => {
-        let right = ''
-        let bottom = ''
-
-        for (const constraint of constraints) {
-          if (constraint.row === rowIndex && constraint.col === columnIndex) {
-            if (constraint.isVertical) {
-              bottom = constraint.constraint
-            } else {
-              right = constraint.constraint
-            }
-          }
-        }
-
-        return {
-          value: visibleCells.includes(cellIndexToSting(rowIndex, columnIndex))
-            ? column
-            : '',
-          constraints: { right, bottom }
-        }
-      })
-    )
+    const prepared = getPreparedBoard(solvedBoard, settings)
 
     setBoard(prepared)
   }

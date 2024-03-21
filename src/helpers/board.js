@@ -137,3 +137,38 @@ export function calculatePuzzleParameters({ size, level }) {
     constraintsCount
   }
 }
+
+export function getPreparedBoard(solvedBoard, settings) {
+  const { visibleCellsCount, constraintsCount } =
+    calculatePuzzleParameters(settings)
+
+  const visibleCells = selectRandomCells(solvedBoard, visibleCellsCount)
+  const constraints = addConstraintsBasedOnSolvedBoard(
+    solvedBoard,
+    constraintsCount
+  )
+
+  return solvedBoard.map((row, rowIndex) =>
+    row.map((column, columnIndex) => {
+      let right = ''
+      let bottom = ''
+
+      for (const constraint of constraints) {
+        if (constraint.row === rowIndex && constraint.col === columnIndex) {
+          if (constraint.isVertical) {
+            bottom = constraint.constraint
+          } else {
+            right = constraint.constraint
+          }
+        }
+      }
+
+      return {
+        value: visibleCells.includes(cellIndexToSting(rowIndex, columnIndex))
+          ? column
+          : '',
+        constraints: { right, bottom }
+      }
+    })
+  )
+}
