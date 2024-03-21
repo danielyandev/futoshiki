@@ -8,6 +8,15 @@ function isSafe(board, row, col, num) {
   return true
 }
 
+function getShuffledValues(length) {
+  const array = Array.from({ length }, (v, i) => i + 1)
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[array[i], array[j]] = [array[j], array[i]] // Swap elements
+  }
+  return array
+}
+
 function solveFutoshiki(board) {
   const size = board.length
   let emptyFound = false
@@ -32,8 +41,9 @@ function solveFutoshiki(board) {
     return true
   }
 
+  const numbers = getShuffledValues(size)
   // Try all possible numbers for the current cell
-  for (let num = 1; num <= size; num++) {
+  for (const num of numbers) {
     // Check if placing 'num' in the current cell is safe
     if (isSafe(board, row, col, num)) {
       board[row][col] = num
