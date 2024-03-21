@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 
-export default function Cell({ cell, maxValue }) {
+export default function Cell({ cell, maxValue, onValueChange }) {
+  // Internal state is used for validations
   const [value, setValue] = useState(cell.value)
 
   const renderRightConstraint = () => {
@@ -29,7 +30,9 @@ export default function Cell({ cell, maxValue }) {
       val = ''
     }
 
+    // Set internal state and pass value to parent
     setValue(val)
+    onValueChange(parseInt(val))
   }
 
   return (
@@ -64,5 +67,7 @@ Cell.propTypes = {
       bottom: PropTypes.oneOf(constraints)
     })
   }).isRequired,
-  maxValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+  maxValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  onValueChange: PropTypes.func.isRequired
 }
