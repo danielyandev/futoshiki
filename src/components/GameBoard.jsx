@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { generateSolvedBoard } from '../helpers/generator.js'
 import {
   addConstraintsBasedOnSolvedBoard,
+  calculatePuzzleParameters,
   cellIndexToSting,
   selectRandomCells
 } from '../helpers/board.js'
@@ -16,9 +17,8 @@ export default function GameBoard({ settings }) {
   }, [settings])
 
   const prepareBoard = () => {
-    // TODO update based on size and level
-    const visibleCellsCount = 2
-    const constraintsCount = 4
+    const { visibleCellsCount, constraintsCount } =
+      calculatePuzzleParameters(settings)
 
     const solvedBoard = generateSolvedBoard(settings)
 

@@ -100,3 +100,40 @@ export function addConstraintsBasedOnSolvedBoard(board, numConstraints) {
 
   return constraints
 }
+
+export function calculatePuzzleParameters({ size, level }) {
+  // level: preFilled
+  const basePreFilled = {
+    1: 3,
+    2: 2,
+    3: 1
+  }
+  const baseConstraints = {
+    1: 3,
+    2: 5,
+    3: 7
+  }
+
+  const adjustmentFactorPreFilled = {
+    1: 2,
+    2: 1.5,
+    3: 1
+  }
+  const adjustmentFactorConstraints = {
+    1: 1,
+    2: 1.5,
+    3: 3
+  }
+
+  const visibleCellsCount = Math.round(
+    basePreFilled[level] + (size - 4) * adjustmentFactorPreFilled[level]
+  )
+  const constraintsCount = Math.round(
+    baseConstraints[level] + (size - 2) * adjustmentFactorConstraints[level]
+  )
+
+  return {
+    visibleCellsCount,
+    constraintsCount
+  }
+}
