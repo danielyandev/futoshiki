@@ -54,6 +54,11 @@ export default function GameBoard({ settings }) {
     board[row][col].value = value
   }
 
+  const handleSolveWithBacktracking = () => {
+    const solved = solveWithBacktracking(board)
+    console.log(solved)
+  }
+
   return (
     <div>
       <div className="d-flex justify-content-center align-items-start">
@@ -75,7 +80,13 @@ export default function GameBoard({ settings }) {
         </div>
       </div>
 
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center gap-2">
+        <button
+          className="btn btn-outline-primary"
+          onClick={handleSolveWithBacktracking}
+        >
+          Solve with backtracking
+        </button>
         <SolutionValidator solvedBoard={solvedBoard} board={board} />
       </div>
     </div>
