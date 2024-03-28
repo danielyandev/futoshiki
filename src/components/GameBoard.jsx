@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { generateSolvedBoard } from '../helpers/generator.js'
 import { getPreparedBoard } from '../helpers/board.js'
 import SolutionValidator from './SolutionValidator.jsx'
+import { solveWithBacktracking } from '../helpers/solver.js'
 
 export default function GameBoard({ settings }) {
   const [board, setBoard] = useState([])
@@ -13,12 +14,39 @@ export default function GameBoard({ settings }) {
     prepareBoard()
   }, [settings])
 
+  /**
+   * Generate a solved board and try to adjust constraints
+   * so that the solution is unique.
+   * If adjusting constraints does not help, regenerate a solved board
+   * and repeat everything again
+   */
   const prepareBoard = () => {
     const solvedBoard = generateSolvedBoard(settings)
+
+    let isUnique = false
+    let i = 0
+    let prepared
+    while (!isUnique && i < 100) {
+      prepared = getPreparedBoard(solvedBoard, settings)
+
+      const solutionCount = { count: 0 }
+      solveWithBacktracking(prepared, solutionCount)
+
+      isUnique = solutionCount.count === 1
+      i++
+
+      if (solutionCount.count === 1) {
+        console.log('The puzzle has a unique solution.')
+      } else {
+        console.log('The puzzle does not have a unique solution.')
+      }
+    }
+
+    if (!isUnique) {
+      prepareBoard()
+    }
+
     setSolvedBoard(solvedBoard)
-
-    const prepared = getPreparedBoard(solvedBoard, settings)
-
     setBoard(prepared)
   }
 

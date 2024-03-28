@@ -6,6 +6,8 @@ export default function SolutionValidator({ solvedBoard, board }) {
   const [valid, setValid] = useState(true)
 
   const checkSolution = () => {
+    console.log(solvedBoard)
+    console.log(board)
     const size = solvedBoard.length
     let _valid = true
     for (let row = 0; _valid && row < size; row++) {
