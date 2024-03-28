@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Cell from './Cell.jsx'
 import PropTypes from 'prop-types'
 import { generateSolvedBoard } from '../helpers/generator.js'
-import { getPreparedBoard } from '../helpers/board.js'
+import { checkSolution, getPreparedBoard } from '../helpers/board.js'
 import SolutionValidator from './SolutionValidator.jsx'
 import { solveWithBacktracking } from '../helpers/solver.js'
 
@@ -23,27 +23,29 @@ export default function GameBoard({ settings }) {
   const prepareBoard = () => {
     const solvedBoard = generateSolvedBoard(settings)
 
-    let isUnique = false
-    let i = 0
     let prepared
-    while (!isUnique && i < 100) {
-      prepared = getPreparedBoard(solvedBoard, settings)
-
-      const solutionCount = { count: 0 }
-      solveWithBacktracking(prepared, solutionCount)
-
-      isUnique = solutionCount.count === 1
-      i++
-
-      if (solutionCount.count === 1) {
-        console.log('The puzzle has a unique solution.')
-      } else {
-        console.log('The puzzle does not have a unique solution.')
+    let i = 0
+    let sameSolution = false
+    while (i < 100) {
+      // If not the same solution prepare another board with different constraints
+      if (!sameSolution) {
+        prepared = getPreparedBoard(solvedBoard, settings)
       }
-    }
 
-    if (!isUnique) {
-      prepareBoard()
+      const solved = solveWithBacktracking(JSON.parse(JSON.stringify(prepared)))
+      // If not solved continue to the next prepared board to check
+      if (!solved) {
+        i++
+        continue
+      }
+
+      sameSolution = checkSolution(solvedBoard, solved)
+      // If not the same solution prepare another board with different constraints
+      if (!sameSolution) {
+        i++
+        continue
+      }
+      i++
     }
 
     setSolvedBoard(solvedBoard)

@@ -172,3 +172,18 @@ export function getPreparedBoard(solvedBoard, settings) {
     })
   )
 }
+
+export function checkSolution(solvedBoard, board) {
+  const size = solvedBoard.length
+  let valid = true
+  for (let row = 0; valid && row < size; row++) {
+    for (let col = 0; col < size; col++) {
+      if (solvedBoard[row][col] !== board[row][col].value) {
+        valid = false
+        break
+      }
+    }
+  }
+
+  return valid
+}

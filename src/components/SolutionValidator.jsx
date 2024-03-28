@@ -1,31 +1,19 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
+import { checkSolution } from '../helpers/board.js'
 
 export default function SolutionValidator({ solvedBoard, board }) {
   const [checked, setChecked] = useState(false)
   const [valid, setValid] = useState(true)
 
-  const checkSolution = () => {
-    console.log(solvedBoard)
-    console.log(board)
-    const size = solvedBoard.length
-    let _valid = true
-    for (let row = 0; _valid && row < size; row++) {
-      for (let col = 0; col < size; col++) {
-        if (solvedBoard[row][col] !== board[row][col].value) {
-          _valid = false
-          break
-        }
-      }
-    }
-
-    setValid(_valid)
+  const handleCheckSolution = () => {
+    setValid(checkSolution(solvedBoard, board))
     setChecked(true)
   }
 
   return (
     <div className="text-center">
-      <button className="btn btn-outline-primary" onClick={checkSolution}>
+      <button className="btn btn-outline-primary" onClick={handleCheckSolution}>
         Check
       </button>
       {checked && (
