@@ -8,7 +8,6 @@ import { solveWithBacktracking } from '../helpers/solver.js'
 
 export default function GameBoard({ settings }) {
   const [board, setBoard] = useState([])
-  const [solvedBoard, setSolvedBoard] = useState([])
 
   useEffect(() => {
     prepareBoard()
@@ -22,10 +21,8 @@ export default function GameBoard({ settings }) {
    */
   const prepareBoard = () => {
     const solvedBoard = generateSolvedBoard(settings)
-
     const prepared = getPreparedBoard(solvedBoard, settings)
 
-    setSolvedBoard(solvedBoard)
     setBoard(prepared)
   }
 
@@ -79,7 +76,7 @@ export default function GameBoard({ settings }) {
         >
           Solve with backtracking
         </button>
-        <SolutionValidator solvedBoard={solvedBoard} board={board} />
+        <SolutionValidator board={board} />
       </div>
     </div>
   )

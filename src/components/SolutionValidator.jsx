@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { checkSolution } from '../helpers/board.js'
 
-export default function SolutionValidator({ solvedBoard, board }) {
+export default function SolutionValidator({ board }) {
   const [checked, setChecked] = useState(false)
   const [valid, setValid] = useState(true)
 
+  useEffect(() => {
+    setChecked(false)
+  }, [board])
+
   const handleCheckSolution = () => {
-    setValid(checkSolution(solvedBoard, board))
+    setValid(checkSolution(board))
     setChecked(true)
   }
 
@@ -34,6 +38,5 @@ export default function SolutionValidator({ solvedBoard, board }) {
 }
 
 SolutionValidator.propTypes = {
-  solvedBoard: PropTypes.array.isRequired,
   board: PropTypes.array.isRequired
 }

@@ -21,10 +21,6 @@ export default function Info() {
         discover the remaining hidden digits.
       </p>
       <p>
-        Each puzzle is guaranteed to have a solution and only one. In order to
-        indicate a move, click the desired square and use the digits on your keyboard.
-      </p>
-      <p>
         For tips and tricks, you can check out a tutorial:
         <a href="https://www.futoshiki.com/how-to-solve" target="_blank">
           {' '}
