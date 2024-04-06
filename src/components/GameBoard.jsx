@@ -27,6 +27,10 @@ export default function GameBoard({ settings }) {
   }
 
   const handleCellChange = (value, row, col) => {
+    if (value) {
+      value = parseInt(value)
+    }
+
     const newBoard = board.map((r, rIndex) => {
       if (rIndex !== row) return r
 

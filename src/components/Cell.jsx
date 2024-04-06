@@ -26,7 +26,7 @@ export default function Cell({ cell, maxValue, onValueChange }) {
       val = ''
     }
 
-    onValueChange(parseInt(val))
+    onValueChange(val)
   }
 
   return (
