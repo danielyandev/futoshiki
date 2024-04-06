@@ -54,6 +54,17 @@ export default function GameBoard({ settings }) {
 
   return (
     <div>
+      <div className="row justify-content-center">
+        <div className="col-4 text-center mt-2">
+          <button
+            className="btn btn-warning"
+            onClick={handleSolveWithBacktracking}
+          >
+            Solve with backtracking
+          </button>
+        </div>
+      </div>
+
       <div className="d-flex justify-content-center align-items-start">
         <div className="mt-5">
           {board.map((row, rowIndex) => (
@@ -74,12 +85,6 @@ export default function GameBoard({ settings }) {
       </div>
 
       <div className="d-flex justify-content-center gap-2">
-        <button
-          className="btn btn-outline-primary"
-          onClick={handleSolveWithBacktracking}
-        >
-          Solve with backtracking
-        </button>
         <SolutionValidator board={board} />
       </div>
     </div>
