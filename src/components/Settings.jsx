@@ -10,7 +10,7 @@ export default function Settings({ settings, onSettingsChange }) {
 
   return (
     <div>
-      <h4>Settings</h4>
+      <h5>Settings</h5>
       <div className="d-flex gap-3">
         <select
           className="form-control form-select"

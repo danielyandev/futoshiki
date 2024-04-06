@@ -55,12 +55,13 @@ export default function GameBoard({ settings }) {
   return (
     <div>
       <div className="row justify-content-center">
+        <h5 className="text-center">Choose an algorithm to solve</h5>
         <div className="col-4 text-center mt-2">
           <button
             className="btn btn-warning"
             onClick={handleSolveWithBacktracking}
           >
-            Solve with backtracking
+            Backtracking
           </button>
         </div>
       </div>
