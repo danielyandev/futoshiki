@@ -1,10 +1,6 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
 
 export default function Cell({ cell, maxValue, onValueChange }) {
-  // Internal state is used for validations
-  const [value, setValue] = useState(cell.value)
-
   const renderRightConstraint = () => {
     if (!cell.constraints.right) return null
 
@@ -30,8 +26,6 @@ export default function Cell({ cell, maxValue, onValueChange }) {
       val = ''
     }
 
-    // Set internal state and pass value to parent
-    setValue(val)
     onValueChange(parseInt(val))
   }
 
@@ -42,7 +36,7 @@ export default function Cell({ cell, maxValue, onValueChange }) {
           <input
             type="text"
             className="w-100 text-center border-0"
-            value={value}
+            value={cell.value}
             onChange={handleValueChange}
           />
         </div>

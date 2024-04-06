@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Cell from './Cell.jsx'
 import PropTypes from 'prop-types'
 import { generateSolvedBoard } from '../helpers/generator.js'
-import { checkSolution, getPreparedBoard } from '../helpers/board.js'
+import { getPreparedBoard } from '../helpers/board.js'
 import SolutionValidator from './SolutionValidator.jsx'
 import { solveWithBacktracking } from '../helpers/solver.js'
 
@@ -30,7 +30,19 @@ export default function GameBoard({ settings }) {
   }
 
   const handleCellChange = (value, row, col) => {
-    board[row][col].value = value
+    const newBoard = board.map((r, rIndex) => {
+      if (rIndex !== row) return r
+
+      return r.map((c, cIndex) => {
+        if (cIndex !== col) return c
+
+        return {
+          ...c,
+          value
+        }
+      })
+    })
+    setBoard(newBoard)
   }
 
   const handleSolveWithBacktracking = () => {
