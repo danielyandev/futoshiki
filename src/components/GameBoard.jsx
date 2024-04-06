@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { generateSolvedBoard } from '../helpers/generator.js'
 import { getPreparedBoard } from '../helpers/board.js'
 import SolutionValidator from './SolutionValidator.jsx'
-import { solveWithBacktracking } from '../helpers/solver.js'
+import { solveWithBacktracking } from '../solvers/backtracking.js'
 
 export default function GameBoard({ settings }) {
   const [board, setBoard] = useState([])

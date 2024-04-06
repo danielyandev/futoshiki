@@ -1,14 +1,4 @@
-import { canPlaceValue } from './board.js'
-
-function findEmptyCell(board) {
-  const size = board.length
-  for (let row = 0; row < size; row++) {
-    for (let col = 0; col < size; col++) {
-      if (board[row][col].value === '') return [row, col]
-    }
-  }
-  return null // No unassigned locations, puzzle solved or no solution
-}
+import { canPlaceValue, findEmptyCell } from '../helpers/board.js'
 
 export function solveWithBacktracking(board) {
   const size = board.length
