@@ -65,31 +65,6 @@ function canPlaceValue(board, row, col, num) {
   return true
 }
 
-export function solveWithBacktracking(board, cellIndex = 0) {
-  if (cellIndex === board.length * board.length) {
-    // All cells filled; solution found
-    return board
-  }
-
-  const row = Math.floor(cellIndex / board.length)
-  const col = cellIndex % board.length
-
-  if (board[row][col].value !== '') {
-    // Cell already has a clue; skip to the next cell
-    return solveWithBacktracking(board, cellIndex + 1)
-  }
-
-  for (let num = 1; num <= board.length; num++) {
-    if (canPlaceValue(board, row, col, num)) {
-      board[row][col].value = num
-      if (solveWithBacktracking(board, cellIndex + 1)) {
-        return board
-      }
-      // Backtrack
-      board[row][col].value = ''
-    }
-  }
-
-  // No valid number found for this cell; backtrack
-  return false
+export function solveWithBacktracking(board) {
+  return board
 }

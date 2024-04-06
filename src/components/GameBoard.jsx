@@ -23,30 +23,7 @@ export default function GameBoard({ settings }) {
   const prepareBoard = () => {
     const solvedBoard = generateSolvedBoard(settings)
 
-    let prepared
-    let i = 0
-    let sameSolution = false
-    while (i < 100) {
-      // If not the same solution prepare another board with different constraints
-      if (!sameSolution) {
-        prepared = getPreparedBoard(solvedBoard, settings)
-      }
-
-      const solved = solveWithBacktracking(JSON.parse(JSON.stringify(prepared)))
-      // If not solved continue to the next prepared board to check
-      if (!solved) {
-        i++
-        continue
-      }
-
-      sameSolution = checkSolution(solvedBoard, solved)
-      // If not the same solution prepare another board with different constraints
-      if (!sameSolution) {
-        i++
-        continue
-      }
-      i++
-    }
+    const prepared = getPreparedBoard(solvedBoard, settings)
 
     setSolvedBoard(solvedBoard)
     setBoard(prepared)
