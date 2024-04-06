@@ -73,6 +73,7 @@ export default function GameBoard({ settings }) {
                 <Cell
                   key={colIndex}
                   cell={cell}
+                  isLastCell={colIndex === board.length - 1}
                   maxValue={settings.size}
                   onValueChange={value =>
                     handleCellChange(value, rowIndex, colIndex)

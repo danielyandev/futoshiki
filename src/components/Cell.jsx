@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-export default function Cell({ cell, maxValue, onValueChange }) {
+export default function Cell({ cell, isLastCell, maxValue, onValueChange }) {
   const renderRightConstraint = () => {
     if (!cell.constraints.right) return null
 
@@ -40,9 +40,11 @@ export default function Cell({ cell, maxValue, onValueChange }) {
             onChange={handleValueChange}
           />
         </div>
-        <div className="cell-constraint-right d-flex justify-content-center align-items-center">
-          {renderRightConstraint()}
-        </div>
+        {!isLastCell && (
+          <div className="cell-constraint-right d-flex justify-content-center align-items-center">
+            {renderRightConstraint()}
+          </div>
+        )}
       </div>
       <div className="cell-constraint-bottom d-flex justify-content-center align-items-center">
         {renderBottomConstraint()}
@@ -63,5 +65,6 @@ Cell.propTypes = {
   }).isRequired,
   maxValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     .isRequired,
-  onValueChange: PropTypes.func.isRequired
+  onValueChange: PropTypes.func.isRequired,
+  isLastCell: PropTypes.bool.isRequired
 }
