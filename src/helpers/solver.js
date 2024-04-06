@@ -10,12 +10,14 @@ function canPlaceValue(board, row, col, num) {
   if (
     board[row][col].constraints.right === '>' &&
     col + 1 < board.length &&
+    board[row][col + 1].value &&
     num <= board[row][col + 1].value
   )
     return false
   if (
     board[row][col].constraints.right === '<' &&
     col + 1 < board.length &&
+    board[row][col + 1].value &&
     num >= board[row][col + 1].value
   )
     return false
@@ -24,12 +26,14 @@ function canPlaceValue(board, row, col, num) {
   if (
     board[row][col].constraints.bottom === '>' &&
     row + 1 < board.length &&
+    board[row + 1][col].value &&
     num <= board[row + 1][col].value
   )
     return false
   if (
     board[row][col].constraints.bottom === '<' &&
     row + 1 < board.length &&
+    board[row + 1][col].value &&
     num >= board[row + 1][col].value
   )
     return false
@@ -65,6 +69,32 @@ function canPlaceValue(board, row, col, num) {
   return true
 }
 
+function findEmptyCell(board) {
+  const size = board.length
+  for (let row = 0; row < size; row++) {
+    for (let col = 0; col < size; col++) {
+      if (board[row][col].value === '') return [row, col]
+    }
+  }
+  return null // No unassigned locations, puzzle solved or no solution
+}
+
 export function solveWithBacktracking(board) {
-  return board
+  const size = board.length
+  let emptyCell = findEmptyCell(board)
+
+  if (!emptyCell) {
+    return true // Puzzle solved
+  }
+  const [row, col] = emptyCell
+
+  for (let num = 1; num <= size; num++) {
+    if (canPlaceValue(board, row, col, num)) {
+      board[row][col].value = num // Try this number
+      if (solveWithBacktracking(board)) return true // If it leads to a solution, return true
+
+      board[row][col].value = '' // Otherwise, reset and backtrack
+    }
+  }
+  return false // Trigger backtracking
 }

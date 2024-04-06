@@ -34,8 +34,9 @@ export default function GameBoard({ settings }) {
   }
 
   const handleSolveWithBacktracking = () => {
-    const solved = solveWithBacktracking(board)
-    console.log(solved)
+    const boardCopy = JSON.parse(JSON.stringify(board))
+    solveWithBacktracking(boardCopy)
+    console.log(boardCopy)
   }
 
   return (
