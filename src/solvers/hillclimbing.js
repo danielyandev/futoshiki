@@ -52,11 +52,32 @@ function getNeighbor(board) {
   return board // Return original if no valid move found
 }
 
-export function hillClimbingSolver(board, maxIterations = 1000) {
+export function hillClimbingSolver(board, maxAttempts = 3000) {
+  const maxScore = 3 * board.length * board.length
+  let currentScore = 0
+  let currentBoard = board
+  let attempts = 0
+
+  while (currentScore < maxScore && attempts <= maxAttempts) {
+    console.log('Hill climbing attempts: ', attempts)
+    const solved = solve(board)
+    currentScore = solved.score
+    currentBoard = solved.board
+    if (currentScore === maxScore) {
+      return currentBoard
+    }
+
+    attempts++
+  }
+
+  return board
+}
+
+export function solve(board) {
   let currentBoard = board
   let currentScore = evaluateBoard(currentBoard)
 
-  for (let iteration = 0; iteration < maxIterations; iteration++) {
+  for (let iteration = 0; iteration < 1000; iteration++) {
     let newBoard = getNeighbor(currentBoard)
     let newScore = evaluateBoard(newBoard)
 
@@ -66,5 +87,5 @@ export function hillClimbingSolver(board, maxIterations = 1000) {
     }
   }
 
-  return currentBoard
+  return { board: currentBoard, score: currentScore }
 }
