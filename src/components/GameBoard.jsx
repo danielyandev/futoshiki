@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import Cell from './Cell.jsx'
 import PropTypes from 'prop-types'
 import { generateSolvedBoard } from '../helpers/generator.js'
-import { getPreparedBoard } from '../helpers/board.js'
+import { getBoardCopy, getPreparedBoard } from '../helpers/board.js'
 import SolutionValidator from './SolutionValidator.jsx'
 import { solveWithBacktracking } from '../solvers/backtracking.js'
+import { hillClimbingSolver } from '../solvers/hillclimbing.js'
 
 export default function GameBoard({ settings }) {
   const [board, setBoard] = useState([])
@@ -47,9 +48,15 @@ export default function GameBoard({ settings }) {
   }
 
   const handleSolveWithBacktracking = () => {
-    const boardCopy = JSON.parse(JSON.stringify(board))
+    const boardCopy = getBoardCopy(board)
     solveWithBacktracking(boardCopy)
     setBoard(boardCopy)
+  }
+
+  const handleSolveWithLowestDescent = () => {
+    const boardCopy = getBoardCopy(board)
+    const a = hillClimbingSolver(boardCopy)
+    setBoard(a)
   }
 
   return (
@@ -62,6 +69,14 @@ export default function GameBoard({ settings }) {
             onClick={handleSolveWithBacktracking}
           >
             Backtracking
+          </button>
+        </div>
+        <div className="col-4 text-center mt-2">
+          <button
+            className="btn btn-warning"
+            onClick={handleSolveWithLowestDescent}
+          >
+            Lowest descent
           </button>
         </div>
       </div>

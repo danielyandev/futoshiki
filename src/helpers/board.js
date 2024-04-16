@@ -176,7 +176,11 @@ export function getPreparedBoard(solvedBoard, settings) {
 export function canPlaceValue(board, row, col, num) {
   // Check row and column for duplicates
   for (let i = 0; i < board.length; i++) {
-    if (board[row][i].value === num || board[i][col].value === num) {
+    if (i !== col && board[row][i].value === num) {
+      return false
+    }
+
+    if (i !== row && board[i][col].value === num) {
       return false
     }
   }
@@ -258,8 +262,9 @@ export function checkSolution(board) {
   const size = board.length
   for (let row = 0; row < size; row++) {
     for (let col = 0; col < size; col++) {
+      const value = board[row][col].value
       // If a value couldn't be place in current cell return false
-      if (!canPlaceValue(board, row, col, board[row][col])) {
+      if (!value || !canPlaceValue(board, row, col, value)) {
         return false
       }
     }
@@ -267,4 +272,8 @@ export function checkSolution(board) {
 
   // Solution is correct
   return true
+}
+
+export function getBoardCopy(board) {
+  return JSON.parse(JSON.stringify(board))
 }
