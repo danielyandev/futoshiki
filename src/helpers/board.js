@@ -277,3 +277,59 @@ export function checkSolution(board) {
 export function getBoardCopy(board) {
   return JSON.parse(JSON.stringify(board))
 }
+
+export function getCspSettings(board) {
+  const size = board.length
+  const variables = {}
+  const constraints = []
+
+  // Initialize variables and constraints for rows and columns
+  for (let row = 0; row < size; row++) {
+    for (let col = 0; col < size; col++) {
+      const key = `${row}_${col}`
+
+      // Assign domain based on whether the cell is pre-filled or empty
+      if (board[row][col].value === '') {
+        variables[key] = Array.from({ length: size }, (_, i) => i + 1) // Domain: 1 to size
+      } else {
+        variables[key] = [board[row][col].value] // Domain is a single pre-filled value
+      }
+    }
+
+    // Constraints for unique values in each row and column
+    for (let j = 0; j < size; j++) {
+      for (let k = j + 1; k < size; k++) {
+        constraints.push([`${row}_${j}`, `${row}_${k}`, (a, b) => a !== b])
+        constraints.push([`${j}_${row}`, `${k}_${row}`, (a, b) => a !== b])
+      }
+    }
+  }
+
+  // Inequality constraints
+  for (let row = 0; row < size; row++) {
+    for (let col = 0; col < size; col++) {
+      if (board[row][col].constraints.right) {
+        const rightKey = `${row}_${col + 1}`
+        const constraintFunction =
+          board[row][col].constraints.right === '>'
+            ? (a, b) => a > b
+            : (a, b) => a < b
+        if (col + 1 < size) {
+          constraints.push([`${row}_${col}`, rightKey, constraintFunction])
+        }
+      }
+      if (board[row][col].constraints.bottom) {
+        const bottomKey = `${row + 1}_${col}`
+        const constraintFunction =
+          board[row][col].constraints.bottom === '>'
+            ? (a, b) => a > b
+            : (a, b) => a < b
+        if (row + 1 < size) {
+          constraints.push([`${row}_${col}`, bottomKey, constraintFunction])
+        }
+      }
+    }
+  }
+
+  return { variables, constraints }
+}

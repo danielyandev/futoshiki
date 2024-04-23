@@ -52,7 +52,7 @@ function getNeighbor(board) {
   return board // Return original if no valid move found
 }
 
-export function hillClimbingSolver(board, maxAttempts = 3000) {
+export function solveWithHillClimbing(board, maxAttempts = 3000) {
   const maxScore = 3 * board.length * board.length
   let currentScore = 0
   let currentBoard = board

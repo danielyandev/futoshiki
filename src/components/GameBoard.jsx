@@ -5,7 +5,8 @@ import { generateSolvedBoard } from '../helpers/generator.js'
 import { getBoardCopy, getPreparedBoard } from '../helpers/board.js'
 import SolutionValidator from './SolutionValidator.jsx'
 import { solveWithBacktracking } from '../solvers/backtracking.js'
-import { hillClimbingSolver } from '../solvers/hillclimbing.js'
+import { solveWithHillClimbing } from '../solvers/hillclimbing.js'
+import { solveWithCSP } from '../solvers/csp.js'
 
 export default function GameBoard({ settings }) {
   const [board, setBoard] = useState([])
@@ -50,7 +51,13 @@ export default function GameBoard({ settings }) {
   }
 
   const handleSolveWithLowestDescent = () => {
-    const solved = hillClimbingSolver(board)
+    const solved = solveWithHillClimbing(board)
+    setBoard(solved)
+  }
+
+  const handleSolveWithCSP = () => {
+    const boardCopy = getBoardCopy(board)
+    const solved = solveWithCSP(boardCopy)
     setBoard(solved)
   }
 
@@ -76,6 +83,11 @@ export default function GameBoard({ settings }) {
             onClick={handleSolveWithLowestDescent}
           >
             Hill climbing
+          </button>
+        </div>
+        <div className="col-4 text-center mt-2">
+          <button className="btn btn-warning" onClick={handleSolveWithCSP}>
+            CSP
           </button>
         </div>
       </div>
