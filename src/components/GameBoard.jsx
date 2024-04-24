@@ -73,9 +73,9 @@ export default function GameBoard({ settings }) {
 
   return (
     <div>
-      <div className="row justify-content-center">
+      <div className="row">
         <h5 className="text-center">Choose an algorithm to solve</h5>
-        <div className="col-4 text-center mt-2">
+        <div className="col-3 text-center mt-2">
           <button
             className="btn btn-warning"
             onClick={handleSolveWithBacktracking}
@@ -83,7 +83,7 @@ export default function GameBoard({ settings }) {
             Backtracking
           </button>
         </div>
-        <div className="col-4 text-center mt-2">
+        <div className="col-3 text-center mt-2">
           <button
             className="btn btn-warning"
             onClick={handleSolveWithLowestDescent}
@@ -91,12 +91,12 @@ export default function GameBoard({ settings }) {
             Hill climbing
           </button>
         </div>
-        <div className="col-4 text-center mt-2">
+        <div className="col-3 text-center mt-2">
           <button className="btn btn-warning" onClick={handleSolveWithCSP}>
             CSP
           </button>
         </div>
-        <div className="col-4 text-center mt-2">
+        <div className="col-3 text-center mt-2">
           <button
             className="btn btn-warning"
             onClick={handleSolveWithGeneticAlgorithm}

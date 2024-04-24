@@ -1,6 +1,14 @@
+import infoIcon from '../icons/info.svg'
+
 export default function Info() {
   return (
     <div className="small">
+      <div className="alert alert-info fw-bold">
+        <img src={infoIcon} alt="info icon" className="me-2" />
+        Only Backtracking algorithm solves puzzles fast and of any size. Others
+        may fail on large sizes or take longer to solve. Console logs may
+        provide additional info about processing.
+      </div>
       <h6>Rules</h6>
       <p>
         Futoshiki is a board-based puzzle game, also known under the name
