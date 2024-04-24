@@ -1,6 +1,6 @@
-import { canPlaceValue, findEmptyCell } from '../helpers/board.js'
+import { canPlaceValue, deepCopy, findEmptyCell } from '../helpers/board.js'
 
-function evaluateBoard(board) {
+export function evaluateBoard(board) {
   let score = 0
   const size = board.length
 
@@ -31,7 +31,7 @@ function evaluateBoard(board) {
 }
 
 function getNeighbor(board) {
-  let newBoard = JSON.parse(JSON.stringify(board))
+  let newBoard = deepCopy(board)
   let emptyCell = findEmptyCell(newBoard)
 
   if (!emptyCell) return newBoard // No changes if no empty cell is found

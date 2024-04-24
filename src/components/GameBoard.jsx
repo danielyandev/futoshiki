@@ -2,11 +2,12 @@ import { useCallback, useEffect, useState } from 'react'
 import Cell from './Cell.jsx'
 import PropTypes from 'prop-types'
 import { generateSolvedBoard } from '../helpers/generator.js'
-import { getBoardCopy, getPreparedBoard } from '../helpers/board.js'
+import { deepCopy, getPreparedBoard } from '../helpers/board.js'
 import SolutionValidator from './SolutionValidator.jsx'
 import { solveWithBacktracking } from '../solvers/backtracking.js'
 import { solveWithHillClimbing } from '../solvers/hillclimbing.js'
 import { solveWithCSP } from '../solvers/csp.js'
+import { solveWithGeneticAlgorithm } from '../solvers/genetic.js'
 
 export default function GameBoard({ settings }) {
   const [board, setBoard] = useState([])
@@ -45,7 +46,7 @@ export default function GameBoard({ settings }) {
   }
 
   const handleSolveWithBacktracking = () => {
-    const boardCopy = getBoardCopy(board)
+    const boardCopy = deepCopy(board)
     solveWithBacktracking(boardCopy)
     setBoard(boardCopy)
   }
@@ -56,8 +57,13 @@ export default function GameBoard({ settings }) {
   }
 
   const handleSolveWithCSP = () => {
-    const boardCopy = getBoardCopy(board)
+    const boardCopy = deepCopy(board)
     const solved = solveWithCSP(boardCopy)
+    setBoard(solved)
+  }
+
+  const handleSolveWithGeneticAlgorithm = () => {
+    const solved = solveWithGeneticAlgorithm(board)
     setBoard(solved)
   }
 
@@ -88,6 +94,14 @@ export default function GameBoard({ settings }) {
         <div className="col-4 text-center mt-2">
           <button className="btn btn-warning" onClick={handleSolveWithCSP}>
             CSP
+          </button>
+        </div>
+        <div className="col-4 text-center mt-2">
+          <button
+            className="btn btn-warning"
+            onClick={handleSolveWithGeneticAlgorithm}
+          >
+            Genetic algorithm
           </button>
         </div>
       </div>

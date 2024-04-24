@@ -274,7 +274,7 @@ export function checkSolution(board) {
   return true
 }
 
-export function getBoardCopy(board) {
+export function deepCopy(board) {
   return JSON.parse(JSON.stringify(board))
 }
 
