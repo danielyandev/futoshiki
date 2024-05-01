@@ -8,6 +8,7 @@ import { solveWithBacktracking } from '../solvers/backtracking.js'
 import { solveWithHillClimbing } from '../solvers/hillclimbing.js'
 import { solveWithCSP } from '../solvers/csp.js'
 import { solveWithGeneticAlgorithm } from '../solvers/genetic.js'
+import printStats from '../helpers/stats.js'
 
 export default function GameBoard({ settings }) {
   const [board, setBoard] = useState([])
@@ -47,7 +48,8 @@ export default function GameBoard({ settings }) {
 
   const handleSolveWithBacktracking = () => {
     const boardCopy = deepCopy(board)
-    solveWithBacktracking(boardCopy)
+    const { stats } = solveWithBacktracking(boardCopy)
+    printStats(stats)
     setBoard(boardCopy)
   }
 

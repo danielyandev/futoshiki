@@ -1,21 +1,42 @@
 import { canPlaceValue, findEmptyCell } from '../helpers/board.js'
 
-export function solveWithBacktracking(board) {
+export function solveWithBacktracking(
+  board,
+  stats = { calls: 0, backtracks: 0, startTime: performance.now() }
+) {
   const size = board.length
-  let emptyCell = findEmptyCell(board)
+  stats.calls++
 
+  let emptyCell = findEmptyCell(board)
   if (!emptyCell) {
-    return true // Puzzle solved
+    return {
+      solved: true,
+      stats: {
+        ...stats,
+        duration: performance.now() - stats.startTime
+      }
+    } // Puzzle solved
   }
+
   const [row, col] = emptyCell
 
   for (let num = 1; num <= size; num++) {
     if (canPlaceValue(board, row, col, num)) {
       board[row][col].value = num // Try this number
-      if (solveWithBacktracking(board)) return true // If it leads to a solution, return true
+
+      let result = solveWithBacktracking(board, stats)
+      if (result.solved) return result
 
       board[row][col].value = '' // Otherwise, reset and backtrack
+      stats.backtracks++
     }
   }
-  return false // Trigger backtracking
+
+  return {
+    solved: false,
+    stats: {
+      ...stats,
+      duration: performance.now() - stats.startTime
+    }
+  } // Trigger backtracking
 }
