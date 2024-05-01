@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { sizes, levels } from '../constants.js'
 
 export default function Settings({ settings, onSettingsChange }) {
   const [size, setSize] = useState(settings.size)
@@ -17,12 +18,9 @@ export default function Settings({ settings, onSettingsChange }) {
           onChange={e => setSize(e.target.value)}
           defaultValue={size}
         >
-          <option value="4">4x4</option>
-          <option value="5">5x5</option>
-          <option value="6">6x6</option>
-          <option value="7">7x7</option>
-          <option value="8">8x8</option>
-          <option value="9">9x9</option>
+          {sizes.map(size => (
+            <option key={size} value={size}>{`${size}x${size}`}</option>
+          ))}
         </select>
 
         <select
@@ -30,9 +28,11 @@ export default function Settings({ settings, onSettingsChange }) {
           onChange={e => setLevel(e.target.value)}
           defaultValue={level}
         >
-          <option value="1">Easy</option>
-          <option value="2">Normal</option>
-          <option value="3">Hard</option>
+          {Object.entries(levels).map(([level, levelName]) => (
+            <option key={level} value={level}>
+              {levelName}
+            </option>
+          ))}
         </select>
       </div>
       <div className="d-grid col-6 mx-auto mt-2">
