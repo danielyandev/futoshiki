@@ -53,8 +53,9 @@ export default function GameBoard({ settings }) {
     setBoard(boardCopy)
   }
 
-  const handleSolveWithLowestDescent = () => {
-    const solved = solveWithHillClimbing(board)
+  const handleSolveWithHillClimbing = () => {
+    const { board: solved, stats } = solveWithHillClimbing(board)
+    printStats(stats)
     setBoard(solved)
   }
 
@@ -88,7 +89,7 @@ export default function GameBoard({ settings }) {
         <div className="col-3 text-center mt-2">
           <button
             className="btn btn-warning"
-            onClick={handleSolveWithLowestDescent}
+            onClick={handleSolveWithHillClimbing}
           >
             Hill climbing
           </button>

@@ -57,20 +57,35 @@ export function solveWithHillClimbing(board, maxAttempts = 3000) {
   let currentScore = 0
   let currentBoard = board
   let attempts = 0
+  let highestScore = 0
+  let duration = 0
+
+  const startTime = performance.now()
 
   while (currentScore < maxScore && attempts <= maxAttempts) {
-    console.log('Hill climbing attempts: ', attempts)
     const solved = solve(board)
     currentScore = solved.score
     currentBoard = solved.board
+
+    highestScore = Math.max(highestScore, currentScore)
     if (currentScore === maxScore) {
-      return currentBoard
+      duration = performance.now() - startTime
+      return {
+        solved: true,
+        board: currentBoard,
+        stats: { attempts, highestScore, duration }
+      }
     }
 
     attempts++
   }
 
-  return board
+  duration = performance.now() - startTime
+  return {
+    solved: false,
+    board,
+    stats: { attempts, highestScore, duration }
+  }
 }
 
 export function solve(board) {
