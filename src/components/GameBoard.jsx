@@ -67,7 +67,8 @@ export default function GameBoard({ settings }) {
   }
 
   const handleSolveWithGeneticAlgorithm = () => {
-    const solved = solveWithGeneticAlgorithm(board)
+    const { board: solved, stats } = solveWithGeneticAlgorithm(board)
+    printStats(stats)
     setBoard(solved)
   }
 

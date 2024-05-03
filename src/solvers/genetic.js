@@ -90,16 +90,33 @@ function shuffleArray(array) {
 }
 
 export function solveWithGeneticAlgorithm(board) {
+  const startTime = performance.now()
   const boardCopy = deepCopy(board)
+  let stats = {
+    iterations: 0,
+    duration: 0
+  }
+
   for (let i = 0; i < 20; i++) {
-    console.log('Genetic algorithm solving iteration: ', i)
     const solution = geneticAlgorithm(boardCopy)
+    stats.iterations = i + 1
+
     if (checkSolution(solution)) {
-      return solution
+      stats.duration = performance.now() - startTime
+      return {
+        solved: true,
+        board: solution,
+        stats
+      }
     }
   }
 
-  return board
+  stats.duration = performance.now() - startTime
+  return {
+    solved: false,
+    board,
+    stats
+  }
 }
 
 function geneticAlgorithm(board) {
