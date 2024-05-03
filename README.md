@@ -1,8 +1,20 @@
-# React + Vite
+# Futoshiki puzzle
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Run locally
 
-Currently, two official plugins are available:
+```
+npm run dev
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Content
+
+This project offers a Futoshiki puzzle with sizes 4, 5, 6, 7, 8, 9,
+and difficulty levels Easy, Normal, Hard.
+You can try to solve it manually and then check the result.
+
+There are 4 algorithms that can be used to solve the puzzle.
+
+The best is Backtracking, others may perform bad on larger puzzles, or not solve at all.
+
+
+## Enjoy this cool game
