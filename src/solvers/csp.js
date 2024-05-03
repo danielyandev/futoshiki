@@ -1,12 +1,22 @@
 import { getCspSettings } from '../helpers/board.js'
 
 export function solveWithCSP(board) {
+  const startTime = performance.now() // Start timing the solve process
   const csp = getCspSettings(board)
   const solution = solveWithBacktracking({}, csp.variables, csp)
-  if (!solution) {
-    return board
+
+  const stats = {
+    duration: performance.now() - startTime
   }
-  return formatSolution(solution, board)
+
+  if (!solution) {
+    return { solved: false, board, stats }
+  }
+  return {
+    solved: true,
+    board: formatSolution(solution, board),
+    stats
+  }
 }
 
 function formatSolution(solution, board) {

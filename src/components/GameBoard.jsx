@@ -61,7 +61,8 @@ export default function GameBoard({ settings }) {
 
   const handleSolveWithCSP = () => {
     const boardCopy = deepCopy(board)
-    const solved = solveWithCSP(boardCopy)
+    const { board: solved, stats } = solveWithCSP(boardCopy)
+    printStats(stats)
     setBoard(solved)
   }
 
