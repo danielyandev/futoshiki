@@ -1,5 +1,8 @@
 # Futoshiki puzzle
 
+## Demo
+[http://futoshiki-ai-solver.s3-website-us-east-1.amazonaws.com](http://futoshiki-ai-solver.s3-website-us-east-1.amazonaws.com)
+
 ## Run locally
 
 ```
